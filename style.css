@@ -7,9 +7,15 @@
 	background-color: #0d0d0d;
 }
 
+#grid {
+	display: grid;
+	grid-template-columns: 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px;
+	grid-template-rows: 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px;
+}
+
 .cell {
 	border-style: solid;
-	border-color: rgba(255, 255, 255, 0.3);
+	border-color: rgba(255, 255, 255, 0.15);
 	border-width: 1px;
 	border-radius: 0px;
 	height: 1.3rem;
