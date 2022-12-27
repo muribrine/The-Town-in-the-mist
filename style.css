@@ -9,8 +9,8 @@
 
 #grid {
 	display: grid;
-	grid-template-columns: 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px;
-	grid-template-rows: 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px;
+	grid-template-columns: 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px;
+	grid-template-rows: 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px 24px;
 }
 
 .cell {
