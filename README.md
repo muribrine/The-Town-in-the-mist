@@ -1,2 +1,2 @@
 # The-Town-in-the-mist
- a terror game played on the browser
+ a turn-based horror game played on the browser.
