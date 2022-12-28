@@ -1,11 +1,5 @@
-function updateWorldGrid(size, objectData, defaultSymbol) {
-	let newWorldGridData = {};
-
-	for (let y = 0; y < size; y++) {
-		for (let x = 0; x < size; x++) {
-			newWorldGridData[`x${x}y${y}`] = defaultSymbol;
-		}
-	}
+function updateWorldGrid(size, world_grid_data, objectData, defaultSymbol) {
+	let newWorldGridData = world_grid_data;
 
 	for (const objectID in objectData) {
 		let objectGX = objectData[objectID].gx;
