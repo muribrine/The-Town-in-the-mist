@@ -1,14 +1,9 @@
-import { createViewGrid } from './rendering/createViewGrid.js';
-import { renderViewGrid } from './rendering/renderViewGrid.js';
-import { updateViewGrid } from './rendering/updateViewGrid.js';
-import { createUi } from './rendering/createUi.js';
+import { createViewGrid, renderViewGrid, updateViewGrid } from './rendering/viewGrid.js';
+import { createUi, updateUi } from './rendering/Ui.js';
 
-import { createGameObject } from './game/createGameObject.js';
-import { createWorldGrid } from './game/createWorldGrid.js';
-import { updateWorldGrid } from './game/updateWorldGrid.js';
-import { moveObjectByVector } from './game/moveObjectByVector.js';
-import { moveEntityByVector } from './game/moveEntityByVector.js';
-import { updateUi } from './rendering/updateUi.js';
+import { createGameObject } from './game/GameObjects.js';
+import { createWorldGrid, updateWorldGrid } from './game/worldGrid.js';
+import { moveObjectByVector, moveEntityByVector } from './game/moveByVector.js';
 
 const gameState = {
 	viewport_data: {
