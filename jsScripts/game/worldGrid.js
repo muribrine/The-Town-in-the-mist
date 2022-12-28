@@ -4,12 +4,7 @@ function createWorldGrid(size, defaultSymbol) {
 	try {
 		for (let y = 0; y < size; y++) {
 			for (let x = 0; x < size; x++) {
-				let randomNumber = Math.round(Math.random() * 10);
-				if (randomNumber < 2) {
-					world_grid_data[`x${x}y${y}`] = '*';
-				} else {
-					world_grid_data[`x${x}y${y}`] = defaultSymbol;
-				}
+				world_grid_data[`x${x}y${y}`] = defaultSymbol;
 			}
 		}
 		return world_grid_data;
@@ -18,18 +13,10 @@ function createWorldGrid(size, defaultSymbol) {
 	}
 }
 
-function updateWorldGrid(size, world_grid_data, objectData, defaultSymbol) {
-	let newWorldGridData = world_grid_data;
-
+function updateWorldGrid(world_grid_data, objectData) {
 	for (const objectID in objectData) {
-		let objectGX = objectData[objectID].gx;
-		let objectGY = objectData[objectID].gy;
-		let objectSymbol = objectData[objectID].symbol;
-
-		newWorldGridData[`x${objectGX}y${objectGY}`] = objectSymbol;
+		world_grid_data[`x${objectData[objectID].gx}y${objectData[objectID].gy}`] = objectData[objectID].symbol;
 	}
-
-	return newWorldGridData;
 }
 
 export { createWorldGrid, updateWorldGrid };

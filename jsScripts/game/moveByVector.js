@@ -5,8 +5,7 @@ function moveEntityByVector(entity, vector) {
 
 function moveObjectByVector(object, vector, worldGridData, defaultSymbol) {
 	worldGridData[`x${object.gx}y${object.gy}`] = defaultSymbol;
-	object.gx += vector[0];
-	object.gy += vector[1];
+	moveEntityByVector(object, vector);
 }
 
 export { moveEntityByVector, moveObjectByVector };

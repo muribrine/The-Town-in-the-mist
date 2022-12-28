@@ -1,84 +1,34 @@
+function createUiElement(type, className, id, innerText, parent) {
+	let element = document.createElement(type);
+	element.className = className;
+	element.id = id;
+	element.innerText = innerText;
+	parent.appendChild(element);
+	return element;
+}
+
 function createUi() {
-	let statsContainer = document.createElement('div');
-	statsContainer.className = 'internal-container';
-	statsContainer.id = 'stats-container';
-
-	let statsH2 = document.createElement('h2');
-	statsH2.innerText = 'Stats:';
-
-	let healthUi = document.createElement('label');
-	healthUi.className = 'stats-ui';
-	healthUi.id = 'health-ui';
-
-	let hungerUi = document.createElement('label');
-	hungerUi.className = 'stats-ui';
-	hungerUi.id = 'hunger-ui';
-
-	let thirstUi = document.createElement('label');
-	thirstUi.className = 'stats-ui';
-	thirstUi.id = 'thirst-ui';
-
-	let sanityUi = document.createElement('label');
-	sanityUi.className = 'stats-ui';
-	sanityUi.id = 'sanity-ui';
-
-	statsContainer.appendChild(statsH2);
-
-	statsContainer.appendChild(healthUi);
-	statsContainer.appendChild(hungerUi);
-	statsContainer.appendChild(thirstUi);
-	statsContainer.appendChild(sanityUi);
+	let statsContainer = createUiElement('div', 'internal-container', 'stats-container', '', document.getElementById('container'));
+	createUiElement('h2', '', '', 'Stats: ', statsContainer);
+	createUiElement('label', 'stats-ui', 'health-ui', '', statsContainer);
+	createUiElement('label', 'stats-ui', 'hunger-ui', '', statsContainer);
+	createUiElement('label', 'stats-ui', 'thirst-ui', '', statsContainer);
+	createUiElement('label', 'stats-ui', 'sanity-ui', '', statsContainer);
 
 	//---===---//
 
-	let equipmentContainer = document.createElement('div');
-	equipmentContainer.className = 'internal-container';
-	equipmentContainer.id = 'equipment-container';
-
-	let equipmentH2 = document.createElement('h2');
-	equipmentH2.innerText = 'Equipment:';
-
-	let clothingUi = document.createElement('label');
-	clothingUi.className = 'equipment-ui';
-	clothingUi.id = 'clothing-ui';
-
-	let equipedUi = document.createElement('label');
-	equipedUi.className = 'equipment-ui';
-	equipedUi.id = 'equiped-ui';
-
-	equipmentContainer.appendChild(equipmentH2);
-
-	equipmentContainer.appendChild(clothingUi);
-	equipmentContainer.appendChild(equipedUi);
+	let equipmentContainer = createUiElement('div', 'internal-container', 'equipment-container', '', document.getElementById('container'));
+	createUiElement('h2', '', '', 'Equipment: ', equipmentContainer);
+	createUiElement('label', 'equipment-ui', 'clothing-ui', '', equipmentContainer);
+	createUiElement('label', 'equipment-ui', 'equiped-ui', '', equipmentContainer);
 
 	//---===---//
 
-	let inventoryContainer = document.createElement('div');
-	inventoryContainer.className = 'internal-container';
-	inventoryContainer.id = 'inventory-container';
-
-	let inventoryH2 = document.createElement('h2');
-	inventoryH2.innerText = 'Inventory:';
-
-	inventoryContainer.appendChild(inventoryH2);
+	createUiElement('h2', '', '', 'Inventory: ', createUiElement('div', 'internal-container', 'inventory-container', '', document.getElementById('container')));
 
 	//---===---//
 
-	let medicalContainer = document.createElement('div');
-	medicalContainer.className = 'internal-container';
-	medicalContainer.id = 'medical-container';
-
-	let medicalH2 = document.createElement('h2');
-	medicalH2.innerText = 'Medical:';
-
-	medicalContainer.appendChild(medicalH2);
-
-	//---===---//
-
-	document.getElementById('container').appendChild(statsContainer);
-	document.getElementById('container').appendChild(equipmentContainer);
-	document.getElementById('container').appendChild(inventoryContainer);
-	document.getElementById('container').appendChild(medicalContainer);
+	createUiElement('h2', '', '', 'Medical: ', createUiElement('div', 'internal-container', 'medical-container', '', document.getElementById('container')));
 }
 
 function updateUi(ui_data) {
