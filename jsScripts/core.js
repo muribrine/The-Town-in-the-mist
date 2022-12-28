@@ -1,21 +1,37 @@
 import { createViewGrid } from './rendering/createViewGrid.js';
 import { renderViewGrid } from './rendering/renderViewGrid.js';
 import { updateViewGrid } from './rendering/updateViewGrid.js';
+import { createUi } from './rendering/createUi.js';
 
 import { createGameObject } from './game/createGameObject.js';
 import { createWorldGrid } from './game/createWorldGrid.js';
 import { updateWorldGrid } from './game/updateWorldGrid.js';
 import { moveObjectByVector } from './game/moveObjectByVector.js';
 import { moveEntityByVector } from './game/moveEntityByVector.js';
+import { updateUi } from './rendering/updateUi.js';
 
 const gameState = {
 	viewport_data: {
-		ui_data: {},
+		ui_data: {
+			health: 'IIIIIIIIIIIIIIIIIIIIIIIIIIIIII ',
+			hunger: 'IIIIIIIIIIIIIIIIIIIIIIIIIIIIII ',
+			thirst: 'IIIIIIIIIIIIIIIIIIIIIIIIIIIIII ',
+			sanity: 'IIIIIIIIIIIIIIIIIIIIIIIIIIIIII ',
+			clothing: 'Police Vest',
+			equiped: 'Revolver',
+		},
 		view_grid_data: {},
 	}, //Rendering data
 	game_data: {
 		world_grid_data: {},
-		stats_data: {},
+		stats_data: {
+			health: 30,
+			hunger: 30,
+			thirst: 30,
+			sanity: 30,
+			clothing: 'Police Vest',
+			equiped: 'Revolver',
+		},
 		entity_data: {
 			camera: { gx: 12, gy: 12, size: 25 },
 		},
@@ -41,6 +57,9 @@ const gameState = {
 
 gameState['viewport_data']['view_grid_data'] = createViewGrid(25, gameState['source_data']['config']['default_symbol']);
 gameState['game_data']['world_grid_data'] = createWorldGrid(625, gameState['source_data']['config']['default_symbol']);
+
+createUi();
+
 gameState['game_data']['object_data']['player'] = createGameObject(12, 12, '@', 'normal', 'player', false);
 
 document.addEventListener('keydown', (e) => {
@@ -90,6 +109,8 @@ function gameLoop() {
 	);
 
 	renderViewGrid(gameState['viewport_data']['view_grid_data']);
+
+	updateUi(gameState['viewport_data']['ui_data']);
 
 	fps += 1;
 	gameState['game_data']['temp_data']['movement_vector'] = [0, 0];
