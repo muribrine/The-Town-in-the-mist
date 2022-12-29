@@ -4,6 +4,7 @@ import { playAnimationOnCell } from './rendering/animations.js';
 
 import { createWorldGrid, updateWorldGrid } from './game/worldGrid.js';
 import { moveObjectByVector, moveEntityByVector } from './game/moveByVector.js';
+import { updateBehaviors } from './game/behaviors.js';
 
 const gameState = {
 	viewport_data: {
@@ -23,13 +24,8 @@ const gameState = {
 			layer1: {},
 			layer2: {},
 		},
-		entity_data: {
-			camera: { gx: 12, gy: 12, size: 25 },
-		},
+		entity_data: {},
 		object_data: {},
-		temp_data: {
-			movement_vector: [0, 0],
-		},
 	}, //Internal data
 	source_data: {
 		audio: {},
@@ -41,6 +37,56 @@ const gameState = {
 				Left: 'ArrowLeft',
 				Up: 'ArrowUp',
 				Down: 'ArrowDown',
+			},
+			behaviors: {
+				player: function (object, gameState) {
+					document.addEventListener('keydown', (e) => {
+						switch (e.key) {
+							case gameState['source_data']['config']['keyBindings']['Right']:
+								object['movement_vector'][0] = 1;
+								playAnimationOnCell(12, 12);
+								break;
+
+							case gameState['source_data']['config']['keyBindings']['Left']:
+								object['movement_vector'][0] = -1;
+								playAnimationOnCell(12, 12);
+								break;
+
+							case gameState['source_data']['config']['keyBindings']['Down']:
+								object['movement_vector'][1] = 1;
+								playAnimationOnCell(12, 12);
+								break;
+
+							case gameState['source_data']['config']['keyBindings']['Up']:
+								object['movement_vector'][1] = -1;
+								playAnimationOnCell(12, 12);
+								break;
+
+							default:
+								break;
+						}
+					});
+
+					if (object['canMove']) {
+						let sucessfulyMoved = moveObjectByVector(
+							object,
+							object['movement_vector'],
+							gameState['game_data']['world_grid_data'],
+							gameState['source_data']['config']['default_symbol'],
+							gameState['game_data']['object_data']
+						);
+						if (sucessfulyMoved) object['canMove'] = false;
+					}
+				},
+				zombie: function (object, gameState) {
+					moveObjectByVector(
+						object,
+						object['direction'],
+						gameState['game_data']['world_grid_data'],
+						gameState['source_data']['config']['default_symbol'],
+						gameState['game_data']['object_data']
+					);
+				},
 			},
 		},
 	}, //Audio and config data
@@ -56,107 +102,15 @@ gameState['game_data']['world_grid_data']['layer2'] = createWorldGrid(625, gameS
 gameState['game_data']['object_data']['player'] = {
 	gx: 12,
 	gy: 12,
+	size: 25,
 	layer: 1,
 	symbol: '@',
 	visualState: 'normal',
 	behavior: 'player',
+	canMove: true,
+	movement_vector: [0, 0],
 };
-gameState['game_data']['object_data']['wall1'] = {
-	gx: 4,
-	gy: 4,
-	layer: 2,
-	symbol: '+',
-	visualState: 'normal',
-	behavior: 'wall',
-};
-gameState['game_data']['object_data']['wall2'] = {
-	gx: 4,
-	gy: 5,
-	layer: 2,
-	symbol: '|',
-	visualState: 'normal',
-	behavior: 'wall',
-};
-gameState['game_data']['object_data']['wall3'] = {
-	gx: 4,
-	gy: 6,
-	layer: 2,
-	symbol: '|',
-	visualState: 'normal',
-	behavior: 'wall',
-};
-gameState['game_data']['object_data']['wall4'] = {
-	gx: 4,
-	gy: 7,
-	layer: 2,
-	symbol: '|',
-	visualState: 'normal',
-	behavior: 'wall',
-};
-gameState['game_data']['object_data']['wall5'] = {
-	gx: 4,
-	gy: 8,
-	layer: 2,
-	symbol: '|',
-	visualState: 'normal',
-	behavior: 'wall',
-};
-gameState['game_data']['object_data']['wall6'] = {
-	gx: 4,
-	gy: 9,
-	layer: 2,
-	symbol: '+',
-	visualState: 'normal',
-	behavior: 'wall',
-};
-gameState['game_data']['object_data']['wall7'] = {
-	gx: 5,
-	gy: 9,
-	layer: 2,
-	symbol: '-',
-	visualState: 'normal',
-	behavior: 'wall',
-};
-gameState['game_data']['object_data']['wall8'] = {
-	gx: 6,
-	gy: 9,
-	layer: 2,
-	symbol: '-',
-	visualState: 'normal',
-	behavior: 'wall',
-};
-gameState['game_data']['object_data']['wall9'] = {
-	gx: 7,
-	gy: 9,
-	layer: 2,
-	symbol: '-',
-	visualState: 'normal',
-	behavior: 'wall',
-};
-gameState['game_data']['object_data']['wall10'] = {
-	gx: 8,
-	gy: 9,
-	layer: 2,
-	symbol: '+',
-	visualState: 'normal',
-	behavior: 'wall',
-};
-gameState['game_data']['object_data']['rat'] = {
-	gx: 6,
-	gy: 6,
-	layer: 0,
-	symbol: 'R',
-	visualState: 'normal',
-	behavior: 'rat',
-};
-gameState['game_data']['object_data']['loot'] = {
-	gx: 7,
-	gy: 7,
-	layer: 0,
-	symbol: '%',
-	visualState: 'normal',
-	behavior: 'loot',
-};
+
 gameState['game_data']['object_data']['zombie'] = {
 	gx: 3,
 	gy: 3,
@@ -164,65 +118,22 @@ gameState['game_data']['object_data']['zombie'] = {
 	symbol: 'Z',
 	visualState: 'normal',
 	behavior: 'zombie',
+	direction: [-1, 0],
 };
 
-document.addEventListener('keydown', (e) => {
-	switch (e.key) {
-		case gameState['source_data']['config']['keyBindings']['Right']:
-			gameState['game_data']['temp_data']['movement_vector'][0] = 1;
-			playAnimationOnCell(12, 12);
-			break;
-
-		case gameState['source_data']['config']['keyBindings']['Left']:
-			gameState['game_data']['temp_data']['movement_vector'][0] = -1;
-			playAnimationOnCell(12, 12);
-			break;
-
-		case gameState['source_data']['config']['keyBindings']['Down']:
-			gameState['game_data']['temp_data']['movement_vector'][1] = 1;
-			playAnimationOnCell(12, 12);
-			break;
-
-		case gameState['source_data']['config']['keyBindings']['Up']:
-			gameState['game_data']['temp_data']['movement_vector'][1] = -1;
-			playAnimationOnCell(12, 12);
-			break;
-
-		default:
-			break;
-	}
-});
-
-let playerCanMove = true;
-
-function movePlayer() {
-	if (playerCanMove) {
-		let sucessfulyMoved = moveObjectByVector(
-			gameState['game_data']['object_data']['player'],
-			gameState['game_data']['temp_data']['movement_vector'],
-			gameState['game_data']['world_grid_data'],
-			gameState['source_data']['config']['default_symbol'],
-			gameState['game_data']['object_data']
-		);
-		if (sucessfulyMoved) {
-			playerCanMove = false;
-			moveEntityByVector(gameState['game_data']['entity_data']['camera'], gameState['game_data']['temp_data']['movement_vector']);
-		}
-	}
-}
+gameState['game_data']['object_data']['player']['canMove'] = true;
 
 function gameLoop() {
-	movePlayer();
-
+	updateBehaviors(gameState);
 	updateWorldGrid(gameState['game_data']['world_grid_data'], gameState['game_data']['object_data']);
 	gameState['viewport_data']['view_grid_data'] = updateViewGrid(
-		gameState['game_data']['entity_data']['camera'],
+		gameState['game_data']['object_data']['player'],
 		gameState['game_data']['world_grid_data'],
 		gameState['source_data']['config']['defaultUndefinedSymbol']
 	);
 	renderViewGrid(gameState['viewport_data']['view_grid_data']);
 	updateUi(gameState['viewport_data']['ui_data']);
-	gameState['game_data']['temp_data']['movement_vector'] = [0, 0];
+	gameState['game_data']['object_data']['player']['movement_vector'] = [0, 0];
 
 	requestAnimationFrame(gameLoop);
 }
@@ -230,5 +141,5 @@ function gameLoop() {
 gameLoop();
 
 setInterval(() => {
-	playerCanMove = true;
+	gameState['game_data']['object_data']['player']['canMove'] = true;
 }, 100);

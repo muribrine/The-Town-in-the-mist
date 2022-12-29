@@ -29,6 +29,22 @@ body {
 	align-items: flex-end;
 
 	animation: fadeCell 1s;
+
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently */
+
+	transition: 0.1s;
+}
+
+.cell:hover {
+	border-color: rgba(255, 255, 255, 0.15);
+	background-color: rgba(255, 255, 255, 0.15);
+
+	transition: 0.15s;
 }
 
 .bloody {
