@@ -193,17 +193,27 @@ document.addEventListener('keydown', (e) => {
 	}
 });
 
-function gameLoop() {
-	let sucessfulyMoved = moveObjectByVector(
-		gameState['game_data']['object_data']['player'],
-		gameState['game_data']['temp_data']['movement_vector'],
-		gameState['game_data']['world_grid_data'],
-		gameState['source_data']['config']['default_symbol'],
-		gameState['game_data']['object_data']
-	);
-	if (sucessfulyMoved) {
-		moveEntityByVector(gameState['game_data']['entity_data']['camera'], gameState['game_data']['temp_data']['movement_vector']);
+let playerCanMove = true;
+
+function movePlayer() {
+	if (playerCanMove) {
+		let sucessfulyMoved = moveObjectByVector(
+			gameState['game_data']['object_data']['player'],
+			gameState['game_data']['temp_data']['movement_vector'],
+			gameState['game_data']['world_grid_data'],
+			gameState['source_data']['config']['default_symbol'],
+			gameState['game_data']['object_data']
+		);
+		if (sucessfulyMoved) {
+			playerCanMove = false;
+			moveEntityByVector(gameState['game_data']['entity_data']['camera'], gameState['game_data']['temp_data']['movement_vector']);
+		}
 	}
+}
+
+function gameLoop() {
+	movePlayer();
+
 	updateWorldGrid(gameState['game_data']['world_grid_data'], gameState['game_data']['object_data']);
 	gameState['viewport_data']['view_grid_data'] = updateViewGrid(
 		gameState['game_data']['entity_data']['camera'],
@@ -218,3 +228,7 @@ function gameLoop() {
 }
 
 gameLoop();
+
+setInterval(() => {
+	playerCanMove = true;
+}, 100);
