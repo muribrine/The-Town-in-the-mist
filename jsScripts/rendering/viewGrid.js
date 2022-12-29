@@ -46,7 +46,17 @@ function updateViewGrid(camera, world_grid_data, defaultUndefinedSymbol) {
 			let tx = gx - 12 + x; //target's X position is the camera´s global X position subtracted from 12 minus the target's local X position
 			let ty = gy - 12 + y;
 
-			let cellSymbol = world_grid_data[`x${tx}y${ty}`];
+			let cellSymbol0 = world_grid_data['layer0'][`x${tx}y${ty}`];
+			let cellSymbol1 = world_grid_data['layer1'][`x${tx}y${ty}`];
+			let cellSymbol2 = world_grid_data['layer2'][`x${tx}y${ty}`];
+
+			let cellSymbol = cellSymbol2;
+			if (cellSymbol2 == ' ') {
+				cellSymbol = cellSymbol1;
+				if (cellSymbol1 == ' ') {
+					cellSymbol = cellSymbol0;
+				}
+			}
 
 			if (!cellSymbol) {
 				cellSymbol = defaultUndefinedSymbol;

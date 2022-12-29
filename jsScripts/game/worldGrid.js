@@ -15,7 +15,7 @@ function createWorldGrid(size, defaultSymbol) {
 
 function updateWorldGrid(world_grid_data, objectData) {
 	for (const objectID in objectData) {
-		world_grid_data[`x${objectData[objectID].gx}y${objectData[objectID].gy}`] = objectData[objectID].symbol;
+		world_grid_data[`layer${objectData[objectID].layer}`][`x${objectData[objectID].gx}y${objectData[objectID].gy}`] = objectData[objectID].symbol;
 	}
 }
 
