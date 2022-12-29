@@ -1,7 +1,7 @@
 import { createViewGrid, renderViewGrid, updateViewGrid } from './rendering/viewGrid.js';
 import { createUi, updateUi } from './rendering/Ui.js';
+import { playAnimationOnCell } from './rendering/animations.js';
 
-import { createGameObject } from './game/GameObjects.js';
 import { createWorldGrid, updateWorldGrid } from './game/worldGrid.js';
 import { moveObjectByVector, moveEntityByVector } from './game/moveByVector.js';
 
@@ -47,24 +47,35 @@ createUi();
 gameState['viewport_data']['view_grid_data'] = createViewGrid(25, gameState['source_data']['config']['default_symbol']);
 gameState['game_data']['world_grid_data'] = createWorldGrid(625, gameState['source_data']['config']['default_symbol']);
 
-gameState['game_data']['object_data']['player'] = createGameObject(12, 12, '@', 'normal', 'player', false);
+gameState['game_data']['object_data']['player'] = {
+	gx: 12,
+	gy: 12,
+	symbol: '@',
+	visualState: 'normal',
+	behavior: 'player',
+	passable: false,
+};
 
 document.addEventListener('keydown', (e) => {
 	switch (e.key) {
 		case gameState['source_data']['config']['keyBindings']['Right']:
 			gameState['game_data']['temp_data']['movement_vector'][0] = 1;
+			playAnimationOnCell(12, 12);
 			break;
 
 		case gameState['source_data']['config']['keyBindings']['Left']:
 			gameState['game_data']['temp_data']['movement_vector'][0] = -1;
+			playAnimationOnCell(12, 12);
 			break;
 
 		case gameState['source_data']['config']['keyBindings']['Down']:
 			gameState['game_data']['temp_data']['movement_vector'][1] = 1;
+			playAnimationOnCell(12, 12);
 			break;
 
 		case gameState['source_data']['config']['keyBindings']['Up']:
 			gameState['game_data']['temp_data']['movement_vector'][1] = -1;
+			playAnimationOnCell(12, 12);
 			break;
 
 		default:
