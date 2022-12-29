@@ -44,22 +44,18 @@ const gameState = {
 						switch (e.key) {
 							case gameState['source_data']['config']['keyBindings']['Right']:
 								object['movement_vector'][0] = 1;
-								playAnimationOnCell(12, 12);
 								break;
 
 							case gameState['source_data']['config']['keyBindings']['Left']:
 								object['movement_vector'][0] = -1;
-								playAnimationOnCell(12, 12);
 								break;
 
 							case gameState['source_data']['config']['keyBindings']['Down']:
 								object['movement_vector'][1] = 1;
-								playAnimationOnCell(12, 12);
 								break;
 
 							case gameState['source_data']['config']['keyBindings']['Up']:
 								object['movement_vector'][1] = -1;
-								playAnimationOnCell(12, 12);
 								break;
 
 							default:
@@ -75,17 +71,41 @@ const gameState = {
 							gameState['source_data']['config']['default_symbol'],
 							gameState['game_data']['object_data']
 						);
-						if (sucessfulyMoved) object['canMove'] = false;
+						if (sucessfulyMoved) {
+							object['canMove'] = false;
+							playAnimationOnCell(12, 12);
+						}
 					}
 				},
 				zombie: function (object, gameState) {
-					moveObjectByVector(
-						object,
-						object['direction'],
-						gameState['game_data']['world_grid_data'],
-						gameState['source_data']['config']['default_symbol'],
-						gameState['game_data']['object_data']
-					);
+					let PX = gameState['game_data']['object_data']['player'].gx;
+					let PY = gameState['game_data']['object_data']['player'].gy;
+					let ZX = object.gx;
+					let ZY = object.gy;
+
+					object['direction'][0] = (PX - ZX) / Math.abs(PX - ZX);
+					object['direction'][1] = (PY - ZY) / Math.abs(PY - ZY);
+
+					if (!object['direction'][0]) {
+						object['direction'][0] = 0;
+					}
+
+					if (!object['direction'][1]) {
+						object['direction'][1] = 0;
+					}
+
+					if (object['canMove']) {
+						let sucessfulyMoved = moveObjectByVector(
+							object,
+							object['direction'],
+							gameState['game_data']['world_grid_data'],
+							gameState['source_data']['config']['default_symbol'],
+							gameState['game_data']['object_data']
+						);
+						if (sucessfulyMoved) {
+							object['canMove'] = false;
+						}
+					}
 				},
 			},
 		},
@@ -111,14 +131,37 @@ gameState['game_data']['object_data']['player'] = {
 	movement_vector: [0, 0],
 };
 
-gameState['game_data']['object_data']['zombie'] = {
-	gx: 3,
+gameState['game_data']['object_data']['zombie1'] = {
+	gx: 21,
+	gy: 0,
+	layer: 1,
+	symbol: 'Z',
+	visualState: 'normal',
+	behavior: 'zombie',
+	canMove: true,
+	direction: [0, 0],
+};
+
+gameState['game_data']['object_data']['zombie2'] = {
+	gx: 12,
 	gy: 3,
 	layer: 1,
 	symbol: 'Z',
 	visualState: 'normal',
 	behavior: 'zombie',
-	direction: [-1, 0],
+	canMove: true,
+	direction: [0, 0],
+};
+
+gameState['game_data']['object_data']['zombie3'] = {
+	gx: 3,
+	gy: 6,
+	layer: 1,
+	symbol: 'Z',
+	visualState: 'normal',
+	behavior: 'zombie',
+	canMove: true,
+	direction: [0, 0],
 };
 
 gameState['game_data']['object_data']['player']['canMove'] = true;
@@ -143,3 +186,9 @@ gameLoop();
 setInterval(() => {
 	gameState['game_data']['object_data']['player']['canMove'] = true;
 }, 100);
+
+setInterval(() => {
+	gameState['game_data']['object_data']['zombie1']['canMove'] = true;
+	gameState['game_data']['object_data']['zombie2']['canMove'] = true;
+	gameState['game_data']['object_data']['zombie3']['canMove'] = true;
+}, 600);
