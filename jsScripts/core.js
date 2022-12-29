@@ -83,6 +83,9 @@ const gameState = {
 					let ZX = object.gx;
 					let ZY = object.gy;
 
+					let localX = ZX - PX + 12; //Will be used for implementing the cell animation on movement.
+					let localY = ZY - PY + 12;
+
 					object['direction'][0] = (PX - ZX) / Math.abs(PX - ZX);
 					object['direction'][1] = (PY - ZY) / Math.abs(PY - ZY);
 
@@ -127,6 +130,7 @@ gameState['game_data']['object_data']['player'] = {
 	symbol: '@',
 	visualState: 'normal',
 	behavior: 'player',
+	hasBehavior: true,
 	canMove: true,
 	movement_vector: [0, 0],
 };
@@ -138,6 +142,7 @@ gameState['game_data']['object_data']['zombie1'] = {
 	symbol: 'Z',
 	visualState: 'normal',
 	behavior: 'zombie',
+	hasBehavior: true,
 	canMove: true,
 	direction: [0, 0],
 };
@@ -149,6 +154,7 @@ gameState['game_data']['object_data']['zombie2'] = {
 	symbol: 'Z',
 	visualState: 'normal',
 	behavior: 'zombie',
+	hasBehavior: true,
 	canMove: true,
 	direction: [0, 0],
 };
@@ -160,6 +166,7 @@ gameState['game_data']['object_data']['zombie3'] = {
 	symbol: 'Z',
 	visualState: 'normal',
 	behavior: 'zombie',
+	hasBehavior: true,
 	canMove: true,
 	direction: [0, 0],
 };
