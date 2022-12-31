@@ -147,28 +147,112 @@ gameState['game_data']['object_data']['zombie1'] = {
 	direction: [0, 0],
 };
 
-gameState['game_data']['object_data']['zombie2'] = {
+gameState['game_data']['object_data']['wall1'] = {
 	gx: 12,
-	gy: 3,
-	layer: 1,
-	symbol: 'Z',
+	gy: 8,
+	layer: 2,
+	symbol: '+',
 	visualState: 'normal',
-	behavior: 'zombie',
-	hasBehavior: true,
-	canMove: true,
-	direction: [0, 0],
+	behavior: '',
 };
 
-gameState['game_data']['object_data']['zombie3'] = {
-	gx: 3,
-	gy: 6,
-	layer: 1,
-	symbol: 'Z',
+gameState['game_data']['object_data']['wall2'] = {
+	gx: 13,
+	gy: 8,
+	layer: 2,
+	symbol: '-',
 	visualState: 'normal',
-	behavior: 'zombie',
-	hasBehavior: true,
-	canMove: true,
-	direction: [0, 0],
+	behavior: '',
+};
+
+gameState['game_data']['object_data']['wall3'] = {
+	gx: 14,
+	gy: 8,
+	layer: 2,
+	symbol: '-',
+	visualState: 'normal',
+	behavior: '',
+};
+
+gameState['game_data']['object_data']['wall4'] = {
+	gx: 15,
+	gy: 8,
+	layer: 2,
+	symbol: '-',
+	visualState: 'normal',
+	behavior: '',
+};
+
+gameState['game_data']['object_data']['wall5'] = {
+	gx: 16,
+	gy: 8,
+	layer: 2,
+	symbol: '-',
+	visualState: 'normal',
+	behavior: '',
+};
+
+gameState['game_data']['object_data']['wall6'] = {
+	gx: 17,
+	gy: 8,
+	layer: 2,
+	symbol: '-',
+	visualState: 'normal',
+	behavior: '',
+};
+
+gameState['game_data']['object_data']['wall7'] = {
+	gx: 18,
+	gy: 8,
+	layer: 2,
+	symbol: '-',
+	visualState: 'normal',
+	behavior: '',
+};
+
+gameState['game_data']['object_data']['wall8'] = {
+	gx: 19,
+	gy: 8,
+	layer: 2,
+	symbol: '+',
+	visualState: 'normal',
+	behavior: '',
+};
+
+gameState['game_data']['object_data']['wall9'] = {
+	gx: 19,
+	gy: 9,
+	layer: 2,
+	symbol: '|',
+	visualState: 'normal',
+	behavior: '',
+};
+
+gameState['game_data']['object_data']['wall10'] = {
+	gx: 19,
+	gy: 10,
+	layer: 2,
+	symbol: '|',
+	visualState: 'normal',
+	behavior: '',
+};
+
+gameState['game_data']['object_data']['wall11'] = {
+	gx: 19,
+	gy: 11,
+	layer: 2,
+	symbol: '|',
+	visualState: 'normal',
+	behavior: '',
+};
+
+gameState['game_data']['object_data']['wall12'] = {
+	gx: 19,
+	gy: 12,
+	layer: 2,
+	symbol: '+',
+	visualState: 'normal',
+	behavior: '',
 };
 
 gameState['game_data']['object_data']['player']['canMove'] = true;
@@ -196,6 +280,4 @@ setInterval(() => {
 
 setInterval(() => {
 	gameState['game_data']['object_data']['zombie1']['canMove'] = true;
-	gameState['game_data']['object_data']['zombie2']['canMove'] = true;
-	gameState['game_data']['object_data']['zombie3']['canMove'] = true;
-}, 600);
+}, 300);
